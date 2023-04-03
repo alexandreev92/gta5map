@@ -39,8 +39,7 @@ body {
     position:fixed;
     width: 100%;
     background-color: #383232;
-    padding-left: 15px;
-    padding-right: 15px;
+    padding: 0 12px;
     display: flex;
     align-items: center;
     z-index: 100;
@@ -121,8 +120,9 @@ body {
     display: block !important;
 }
 #listViewBtn{
-    font-size: 16px;
+    font-size: 22px;
     font-family: 'Merriweather';
+    padding: 0 10px;
 }
 
 #map{
@@ -132,8 +132,8 @@ body {
 }
 
 .list-items{
-    position: relative;
-    bottom: -23px;
+    position: absolute;
+    bottom: 12px;
     right: 12px;
 }
 
@@ -244,3 +244,11 @@ body {
     display: block;
 }
 
+@media (min-width: 530px) {
+    .list-item__main {
+        width: 300px;
+    }
+    .listViewClose{
+        right: calc(300px + 13px);
+    }
+}
