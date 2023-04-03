@@ -175,7 +175,7 @@ body {
 .list-item-name {
   background-color: #383232;
   color: white;
-  height: 30px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -219,8 +219,7 @@ body {
   padding: 6px 25px 6px 10px;
 }
 .list-item__item:hover {
-  color: white;
-  background-color: grey;
+  background-color: lightgray;
 }
 
 .list-item__item.active-list {

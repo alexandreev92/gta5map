@@ -1,79 +1,54 @@
-let MONKEY_DATA = []
 
-fetch('js/server/catalog-monkey.json')
-    .then(res => res.json())
-    .then(body => {
-        MONKEY_DATA = body
-        // Отрисовка списка мест
-        let features = MONKEY_DATA.features
-        let placesList = document.querySelector('#listView-monkey')
-        let placesName = document.querySelector('.list-item-name')
-        features.forEach(element => {
-            let headerPlace = element.properties.name
-            headerPlace = headerPlace.slice(0, -3)
-            placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
+// Отрисовка списка мест
+// СПИСКИ ПРЕДМЕТОВ
+// Мозаика обезьяны
+monkey_data.features.forEach((element) => {
+    let placesList = document.querySelector('#listView-monkey')
+    let placesName = document.querySelector('.list-item-name')
+    let headerPlace = element.properties.name
+    headerPlace = headerPlace.slice(0, -3)
+    placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
 
-            listHtml = `
-            <li class="list-item__item">
-            <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
-            </li>
-            `
-            placesList.insertAdjacentHTML('beforeend', listHtml)
-        });
-    })
-    .catch(error =>{
-        console.log(error);
-    })
+    listHtml = `
+    <li class="list-item__item">
+    <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
+    </li>
+    `
+    placesList.insertAdjacentHTML('beforeend', listHtml)
+});
 
-fetch('js/server/letter-scraps.json')
-    .then(res => res.json())
-    .then(body => {
-        LETTERS_DATA = body
-        // Отрисовка списка мест
-        let features = LETTERS_DATA.features
-        let placesList = document.querySelector('#listView-scraps')
-        let placesName = document.querySelector('#letterScraps')
-        features.forEach(element => {
-            let headerPlace = element.properties.name
-            headerPlace = headerPlace.slice(0, -3)
-            placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
+//Обрывки письма 
 
-            listHtml = `
-            <li class="list-item__item">
-            <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name}</a>
-            </li>
-            `
-            placesList.insertAdjacentHTML('beforeend', listHtml)
-        });
-    })
-    .catch(error =>{
-        console.log(error);
-    })
+letters_data.features.forEach((element) => {
+    let placesList = document.querySelector('#listView-scraps')
+    let placesName = document.querySelector('#letterScraps')
+    let headerPlace = element.properties.name
+    headerPlace = headerPlace.slice(0, -3)
+    placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
 
-fetch('js/server/game-cards.json')
-    .then(res => res.json())
-    .then(body => {
-        CARDS_DATA = body
-        // Отрисовка списка мест
-        let features = CARDS_DATA.features
-        let placesList = document.querySelector('#listView-cards')
-        let placesName = document.querySelector('#GameCards')
-        features.forEach(element => {
-            let headerPlace = element.properties.name
-            headerPlace = headerPlace.slice(0, -3)
-            placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
+    listHtml = `
+    <li class="list-item__item">
+    <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
+    </li>
+    `
+    placesList.insertAdjacentHTML('beforeend', listHtml)
+});
+ 
+// Игральные карты 
+gameCards_data.features.forEach(element => {
+    let placesList = document.querySelector('#listView-cards')
+    let placesName = document.querySelector('#GameCards')
+    let headerPlace = element.properties.name
+    headerPlace = headerPlace.slice(0, -3)
+    placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
 
-            listHtml = `
-            <li class="list-item__item">
-            <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name}</a>
-            </li>
-            `
-            placesList.insertAdjacentHTML('beforeend', listHtml)
-        });
-    })
-    .catch(error =>{
-        console.log(error);
-    }) 
+    listHtml = `
+    <li class="list-item__item">
+    <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name}</a>
+    </li>
+    `
+    placesList.insertAdjacentHTML('beforeend', listHtml)
+});
 
 
 
@@ -383,6 +358,7 @@ function findPlace(coords) {
     listItem.forEach(el => {
         el.addEventListener('click', (e) => {
             let currentBtn = e.currentTarget;
+            console.log(currentBtn);
             listItem.forEach(el => {
                 if (el !== currentBtn) {
                     el.classList.remove('active-list')

@@ -168,7 +168,7 @@ body {
 .list-item-name{
     background-color: #383232;
     color: white;
-    height: 30px;
+    height: 35px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -211,8 +211,7 @@ body {
     font-size: 20px;
     padding: 6px 25px 6px 10px;
     &:hover{
-        color: white;
-        background-color:grey;
+        background-color:lightgray;
     }
     // &:focus{
     //     color: orange;
