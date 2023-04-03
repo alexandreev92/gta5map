@@ -1,0 +1,14 @@
+{
+    "type": "Feature",
+    "properties": {
+        "id": "01",
+        "name": "Monkey Mosaic #1",
+        "img": "./../img/monkey/1.jpeg",
+        "imgBig": "./../img/monkey/1-big.jpeg",
+        "descr": "Эта спрей-роспись расположена на стене между зданием и выездом с автострады к востоку от Ammu-Nation в районе Strawberry."
+    },
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-10.854492, -69.068607]
+    }
+}

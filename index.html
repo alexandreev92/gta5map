@@ -8,14 +8,15 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap" rel="stylesheet">
-    
+    <!-- FontAwesome -->
     <script src="https://use.fontawesome.com/fcef79b3ef.js"></script>
-
+    <!-- Leaflet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.css" integrity="sha512-mD70nAW2ThLsWH0zif8JPbfraZ8hbCtjQ+5RU1m4+ztZq6/MymyZeB55pWsi4YAX+73yvcaJyk61mzfYMvtm9w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.3/leaflet.js" integrity="sha512-Dqm3h1Y4qiHUjbhxTuBGQsza0Tfppn53SHlu/uj1f+RT+xfShfe7r6czRf5r2NmllO2aKx+tYJgoxboOkn1Scg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- <link rel="stylesheet" href="js/Leaflet-main/dist/leaflet.css">
-    <script src="js/Leaflet-main/src/Leaflet.js"></script> -->
+    <!-- Leaflet Draw -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
 
     <script src="./database/objects.js"></script>
 
@@ -38,21 +39,39 @@
                             </button>
                             <button id="triathlon" class="header__btn">
                                 <img class="header__btn-img" src="img/Triathlon-Icon.webp" alt="triathlon">
-                            </button>                     -->
-                            <button id="addMarker" class="header__btn-marker">
+                            </button>                     
+                            <a id="export" class="header__btn-marker" download="points">
                                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                                <span>Метка</span>
+                                <span>Скачать</span>
+                            </a>       -->
+                            <button class="header__btn-marker" id="listViewBtn">
+                                Список
                             </button>                    
                         </div>
+                        
                     </div>
                 </div>
             </div>
             <div id="map"></div>
-            </div>
         </div>
+            <div class="list-items">
+                <div class="list-item__main">
+                    <!-- Мозаика обезьяны -->
+                    <div class="list-item-name"></div>
+                    <ul class="list-item" id="listView-monkey"></ul>
+                    <!-- Обрывки письма -->
+                    <div class="list-item-name" id="letterScraps"></div>
+                    <ul class="list-item" id="listView-scraps"></ul>
+                    <!-- Игральные карты -->
+                    <div class="list-item-name" id="GameCards"></div>
+                    <ul class="list-item" id="listView-cards"></ul>
+                </div>
+                <button class="listViewClose"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </div>
     </div>
     <script src="js/catalog-monkey.js"></script>
     <script src="js/letter-scraps.js"></script>
+    <script src="js/game-cards.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>

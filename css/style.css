@@ -32,13 +32,20 @@ body {
   margin: 0 auto;
 }
 
+.wrapper {
+  position: relative;
+}
+
 .header {
   height: 40px;
+  position: fixed;
+  width: 100%;
   background-color: #383232;
   padding-left: 15px;
   padding-right: 15px;
   display: flex;
   align-items: center;
+  z-index: 100;
 }
 .header__logo {
   color: white;
@@ -87,17 +94,156 @@ body {
   opacity: 1;
 }
 
+.header__btn-marker.active {
+  opacity: 1;
+  background-color: black;
+  color: orange;
+}
+
 .button-wrapper {
   display: flex;
   justify-content: end;
   margin-top: 3px;
 }
 
+.button-wrapper__btn {
+  border: none;
+  height: 23px;
+  width: 96px;
+  color: white;
+  border-radius: 4px;
+  background-color: #383232;
+  cursor: pointer;
+}
+
+.button-wrapper__btn.active {
+  color: white;
+  border-radius: 4px;
+  background-color: cadetblue;
+}
+
 .show {
-  display: none;
+  display: block !important;
+}
+
+#listViewBtn {
+  font-size: 16px;
+  font-family: "Merriweather";
 }
 
 #map {
   background-color: #0FA8D2;
   height: 95.1vh;
+  top: 40px;
+}
+
+.list-items {
+  position: relative;
+  bottom: -23px;
+  right: 12px;
+}
+
+.list-item {
+  display: none;
+}
+.list-item__link {
+  margin-right: 10px;
+}
+
+.list-item.show {
+  display: block;
+}
+
+.list-item__main {
+  display: none;
+  height: 32vh;
+  width: 79vw;
+  overflow: auto;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0 0 3px 0px;
+  border-radius: 5px;
+  background-color: white;
+  z-index: 1000;
+}
+
+.list-item__main.show {
+  display: block;
+}
+
+.list-item-name {
+  background-color: #383232;
+  color: white;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 5px;
+  font-size: 20px;
+  cursor: pointer;
+  border: 1px solid orange;
+  border-bottom-width: 0px;
+}
+.list-item-name:first-child {
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+}
+.list-item-name:last-of-type {
+  border-bottom-left-radius: inherit;
+  border-bottom-right-radius: inherit;
+  border-bottom-width: 1px;
+}
+.list-item-name i {
+  transition: all 0.3s;
+}
+
+.fa-angle-down {
+  margin-left: 5px;
+}
+
+.rotate {
+  transform: rotate(-180deg);
+  transition: all 0.3s;
+}
+
+.list-item-name.active {
+  color: orange;
+  background-color: #383232;
+}
+
+.list-item__item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  padding: 6px 25px 6px 10px;
+}
+.list-item__item:hover {
+  color: white;
+  background-color: grey;
+}
+
+.list-item__item.active-list {
+  color: black;
+  background-color: lightgray;
+}
+
+.listViewClose {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  height: 30px;
+  width: 30px;
+  right: calc(79vw + 13px);
+  box-shadow: 0 0 3px 0px;
+  border: none;
+  border-radius: 3px;
+  background-color: white;
+  z-index: 1000;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.listViewClose.show {
+  display: block;
 }/*# sourceMappingURL=style.css.map */
