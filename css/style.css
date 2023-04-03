@@ -247,7 +247,7 @@ body {
   display: block;
 }
 
-@media (min-width: 530px) {
+@media (min-width: 380px) {
   .list-item__main {
     width: 300px;
   }
