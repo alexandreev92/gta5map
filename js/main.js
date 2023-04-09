@@ -2,53 +2,144 @@
 // Отрисовка списка мест
 // СПИСКИ ПРЕДМЕТОВ
 // Мозаика обезьяны
-monkey_data.features.forEach((element) => {
-    let placesList = document.querySelector('#listView-monkey')
-    let placesName = document.querySelector('.list-item-name')
-    let headerPlace = element.properties.name
-    headerPlace = headerPlace.slice(0, -3)
-    placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
 
-    listHtml = `
-    <li class="list-item__item">
-    <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
-    </li>
-    `
-    placesList.insertAdjacentHTML('beforeend', listHtml)
+function renderData(data) {
+    // Создаём обёртку "drop" для данных
+    let drop = document.createElement("div")
+        drop.classList.add('list-item__dropdown');
+    // Создаём элемент "кнопку" для Dropdown
+    let placesName = document.createElement("div")
+        placesName.classList.add('list-item-name');
+        // placesName.classList.add('active');
+    // Создаём обёртку ul для будущего списка li
+    let placesList = document.createElement("ul")
+        placesList.classList.add('list-item')       
+        // Перебираем данные и отрисовываем их внутри обёртки "drop"
+        data.features.forEach((element) => {
+        let parent = document.querySelector('.list-item__main')
+        // Получаем имя кнопки
+        let headerPlace = element.properties.name
+        headerPlace = headerPlace.slice(0, -3)
+        // Добавляем кнопке полученное имя плюс "стрелочку"
+        placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
+        
+        listHtml = `
+        <li class="list-item__item">
+        <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
+        </li>
+        `
+        // добавляем Кнопку "Dropdown" в начало обёртки drop
+        drop.prepend(placesName);
+        // Добавляем созданные "li" (отрисованную вёрстку списка) в "ul"
+        placesList.insertAdjacentHTML('beforeend', listHtml)
+        // добавляем ul со списком мест в обёртку drop
+        drop.insertAdjacentElement('beforeend', placesList)
+        // Добавляем "drop" в общую "родительскую" обёртку всех "выпадающих списков"
+        parent.insertAdjacentElement('beforeend', drop)
+    });
+
+}
+renderData(monkey_data)
+renderData(letters_data)
+renderData(gameCards_data)
+
+
+const list_btn = document.querySelector('#listViewBtn');
+const list_viewWrapper = document.querySelector('.list-item__main');
+const list_viewDropdown = document.querySelector('.list-item-name');
+const list_view = document.querySelectorAll('.list-item');
+const listViewClose = document.querySelector('.listViewClose')
+
+//Нажатие по кнопкам Dropdown общего списка локаций
+list_viewWrapper.addEventListener('click', e => {
+    let target = e.target;
+    let arr = target.querySelector('i');
+    let parent = target.parentNode
+    let list = target.nextElementSibling
+    let list2 = parent.nextElementSibling
+    //Нажатие по кнопке Dropdown
+    if (target && target.className === 'list-item-name') {
+        list.classList.add('show');
+        target.classList.add('active');
+        // parent.classList.add('active');
+        arr.classList.add('rotate');
+    }
+    else if (target && target.className === 'list-item-name active') {
+        target.classList.remove('active');
+        list.classList.remove('show');
+        arr.classList.remove('rotate');
+    }
+    // Нажатие на стрелку
+    if (target && target.className === 'fa fa-angle-down'){
+        parent.classList.add('active');
+        target.classList.add('rotate')
+        list2.classList.add('show');
+    } else if (target && target.className === 'fa fa-angle-down rotate'){
+        parent.classList.remove('active');
+        target.classList.remove('rotate')
+        list2.classList.remove('show');
+    }
 });
 
+
+list_btn.addEventListener('click', () => {
+    // Кнопка СПИСОК Активна/Не активна
+    list_btn.classList.toggle('active');
+    // Показать/Скрыть Компонент СПИСКА МЕСТ
+    list_viewWrapper.classList.toggle('show')
+    // Показать/Скрыть кнопку ЗАКРЫТЬ
+    listViewClose.classList.toggle('show')        
+})
+
+// list_viewDropdown.forEach(el => {
+//     el.addEventListener('click', (e)=>{
+//         let currentBtn = e.currentTarget;
+//         let drop = currentBtn.nextElementSibling;
+//         let arr = currentBtn.querySelector('i');
+//         currentBtn.classList.toggle('active');
+//         drop.classList.toggle('show');
+//         arr.classList.toggle('rotate');
+//     })
+// })
+
+listViewClose.addEventListener('click', () => {
+    list_btn.classList.remove('active');
+    list_viewWrapper.classList.remove('show')
+    listViewClose.classList.remove('show')
+
+})
 //Обрывки письма 
 
-letters_data.features.forEach((element) => {
-    let placesList = document.querySelector('#listView-scraps')
-    let placesName = document.querySelector('#letterScraps')
-    let headerPlace = element.properties.name
-    headerPlace = headerPlace.slice(0, -3)
-    placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
+// letters_data.features.forEach((element) => {
+//     let placesList = document.querySelector('#listView-scraps')
+//     let placesName = document.querySelector('#letterScraps')
+//     let headerPlace = element.properties.name
+//     headerPlace = headerPlace.slice(0, -3)
+//     placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
 
-    listHtml = `
-    <li class="list-item__item">
-    <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
-    </li>
-    `
-    placesList.insertAdjacentHTML('beforeend', listHtml)
-});
+//     listHtml = `
+//     <li class="list-item__item">
+//     <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
+//     </li>
+//     `
+//     placesList.insertAdjacentHTML('beforeend', listHtml)
+// });
  
 // Игральные карты 
-gameCards_data.features.forEach(element => {
-    let placesList = document.querySelector('#listView-cards')
-    let placesName = document.querySelector('#GameCards')
-    let headerPlace = element.properties.name
-    headerPlace = headerPlace.slice(0, -3)
-    placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
+// gameCards_data.features.forEach(element => {
+//     let placesList = document.querySelector('#listView-cards')
+//     let placesName = document.querySelector('#GameCards')
+//     let headerPlace = element.properties.name
+//     headerPlace = headerPlace.slice(0, -3)
+//     placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
 
-    listHtml = `
-    <li class="list-item__item">
-    <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name}</a>
-    </li>
-    `
-    placesList.insertAdjacentHTML('beforeend', listHtml)
-});
+//     listHtml = `
+//     <li class="list-item__item">
+//     <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name}</a>
+//     </li>
+//     `
+//     placesList.insertAdjacentHTML('beforeend', listHtml)
+// });
 
 
 
@@ -319,38 +410,6 @@ function complete(item) {
 
 
 
-const list_btn = document.querySelector('#listViewBtn');
-const list_view = document.querySelectorAll('.list-item');
-const list_viewWrapper = document.querySelector('.list-item__main');
-const list_viewDropdown = document.querySelectorAll('.list-item-name');
-const listViewClose = document.querySelector('.listViewClose')
-list_btn.addEventListener('click', () => {
-    // Кнопка СПИСОК Активна/Не активна
-    list_btn.classList.toggle('active');
-    // Показать/Скрыть Компонент СПИСКА МЕСТ
-    list_viewWrapper.classList.toggle('show')
-    // Показать/Скрыть кнопку ЗАКРЫТЬ
-    listViewClose.classList.toggle('show')        
-})
-
-list_viewDropdown.forEach(el => {
-    el.addEventListener('click', (e)=>{
-        let currentBtn = e.currentTarget;
-        let drop = currentBtn.nextElementSibling;
-        let arr = currentBtn.querySelector('i');
-        currentBtn.classList.toggle('active');
-        drop.classList.toggle('show');
-        arr.classList.toggle('rotate');
-    })
-})
-
-listViewClose.addEventListener('click', () => {
-    list_btn.classList.remove('active');
-    list_viewWrapper.classList.remove('show')
-    listViewClose.classList.remove('show')
-
-})
-
 function findPlace(coords) {
     const listItem = document.querySelectorAll('.list-item__item')
 
@@ -358,7 +417,6 @@ function findPlace(coords) {
     listItem.forEach(el => {
         el.addEventListener('click', (e) => {
             let currentBtn = e.currentTarget;
-            console.log(currentBtn);
             listItem.forEach(el => {
                 if (el !== currentBtn) {
                     el.classList.remove('active-list')
