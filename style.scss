@@ -191,6 +191,10 @@ body {
     }
 }
 
+.list-item__dropdown {
+    
+}
+
 .fa-angle-down{
     margin-left: 5px;
 }
@@ -199,6 +203,7 @@ body {
     transform: rotate(-180deg);
     transition: all 0.3s;
 }
+
 
 .list-item-name.active{
     color: orange;

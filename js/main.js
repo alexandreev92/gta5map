@@ -39,10 +39,10 @@ function renderData(data) {
     });
 
 }
+
 renderData(monkey_data)
 renderData(letters_data)
 renderData(gameCards_data)
-
 
 const list_btn = document.querySelector('#listViewBtn');
 const list_viewWrapper = document.querySelector('.list-item__main');
@@ -108,40 +108,6 @@ listViewClose.addEventListener('click', () => {
     listViewClose.classList.remove('show')
 
 })
-//Обрывки письма 
-
-// letters_data.features.forEach((element) => {
-//     let placesList = document.querySelector('#listView-scraps')
-//     let placesName = document.querySelector('#letterScraps')
-//     let headerPlace = element.properties.name
-//     headerPlace = headerPlace.slice(0, -3)
-//     placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
-
-//     listHtml = `
-//     <li class="list-item__item">
-//     <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
-//     </li>
-//     `
-//     placesList.insertAdjacentHTML('beforeend', listHtml)
-// });
- 
-// Игральные карты 
-// gameCards_data.features.forEach(element => {
-//     let placesList = document.querySelector('#listView-cards')
-//     let placesName = document.querySelector('#GameCards')
-//     let headerPlace = element.properties.name
-//     headerPlace = headerPlace.slice(0, -3)
-//     placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
-
-//     listHtml = `
-//     <li class="list-item__item">
-//     <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name}</a>
-//     </li>
-//     `
-//     placesList.insertAdjacentHTML('beforeend', listHtml)
-// });
-
-
 
 
 // Переменные
@@ -223,6 +189,8 @@ let drawControl = new L.Control.Draw({
 })
 // Добавление панели на карту
 // map.addControl(drawControl)
+
+
 
 // Рисование на карте 
 map.on("draw:created", function (e) {
@@ -516,3 +484,109 @@ let overlays = {
 
 // Добавление Контроль слоев
 L.control.layers(null, overlays).addTo(map);
+
+
+// Проверка Панели со слоями ЧЕКБОКСЫ
+const formToggle = document.querySelector('.leaflet-control-layers leaflet-control')
+const formLayers = document.querySelector('.leaflet-control-layers-overlays')
+
+// const label = formLayers.querySelectorAll('input').nextSibling
+
+
+checkboxesLS = {}
+const form = document.querySelector('.leaflet-control-layers-list')
+const LS = localStorage
+let checked;    
+
+
+const formCheckbox = document.querySelectorAll('.leaflet-control-layers-selector')
+formLayers.setAttribute('id', `formLayers`)
+
+formCheckbox.forEach((el, i)=>{
+    const label = el.nextElementSibling.textContent
+    el.setAttribute('id', i+1)
+    el.setAttribute('name', label)
+    const id = el.getAttribute('id')
+    el.setAttribute('onclick', `saveLS(this, ${id})`)
+    // console.log(id);
+    loadLS(el, id)
+    // saveLS(el, id)
+})
+
+
+function saveLS(el, id){
+    // console.log(el);
+    // LS.setItem(`${id}`, el.checked)
+        if (el.checked){
+            LS.setItem(`${id}`, true);
+            // console.log('Тут происходит запись в ЛС');
+        } else {
+            LS.setItem(`${id}`, false);
+        }
+    }
+function loadLS(el, id) {
+    checked = JSON.parse(LS.getItem(`${id}`))
+    if (checked == false){
+        el.click()
+        el.checked = checked
+    }
+    // console.log(checked);
+    // el.checked = checked
+    
+}
+
+
+// Сохранение значений чекбоксов
+// form.addEventListener('input', (event)=>{
+//     const id = event.target.id 
+//     // const name = event.target.name
+//     const title = id
+//     const checked = event.target.checked
+//     checkboxesLS[title] = checked
+//     console.log(checkboxesLS)
+//     // console.log(checkboxesLS);
+//     LS.setItem('checkboxesLS', JSON.stringify(checkboxesLS) )
+//     // console.log(event);
+// })
+// Восстановление значений чекбоксов
+
+
+
+// if (LS.getItem('checkboxesLS')) {
+//     checkboxesLS = JSON.parse(LS.getItem('checkboxesLS'))
+//     let Lslength = Object.keys(checkboxesLS).length
+    // for (i = 0; i < Lslength; i++) {
+    //     // formCheckbox[i+1].trigger('click')
+    //     formCheckbox[i].checked = LS.getItem(checkboxesLS[i] === 'true' ? true : false)
+    // }
+    
+    // console.log(formCheckbox)
+    // for (let key in checkboxesLS) {
+    //     console.log(key);
+    //     if(checkboxesLS.hasOwnProperty(key)){
+    //         formCheckbox.forEach((el, i)=>{
+    //             el.checked = checkboxesLS[key]
+    //             // console.log(el.checked);
+    //         })
+        //   console.log(`${checkboxesLS[key]}`)
+        //   console.log(formCheckbox.checked)
+//         }
+//       }    
+// }
+
+// formCheckbox.forEach((el, i)=>{
+//     const label = el.nextElementSibling.textContent
+
+//     // console.log(el);
+//     el.setAttribute('name', 'checkbox')
+//     console.log(el);
+
+//     el.addEventListener('input', (e)=>{
+//         checked = e.target.checked
+//         // el.checked = true;
+//         // console.log(checkboxesLS);
+//         console.log(checked);
+//         // const id = Number(checkbox.id)
+//     })
+// })
+
