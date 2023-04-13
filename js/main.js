@@ -394,8 +394,9 @@ function findPlace(coords) {
             currentBtn.classList.add('active-list')
         })
     });
-    map.setView([coords[1], coords[0]], 5);
-    mapView = JSON.stringify([coords[1], coords[0]])
+    const zoom = 5
+    map.setView([coords[1], coords[0]], zoom);
+    mapView = JSON.stringify([coords[1], coords[0], zoom])
     LS.setItem('mapView', mapView)
 };
 
@@ -546,10 +547,16 @@ function loadLS(el, id) {
 // const zoomStyle = zoomControl.getAttribute('style')
 // console.log(zoomStyle);
 // console.log(map._zoom);
+const mainLink = document.querySelector('.header__logo')
+mainLink.addEventListener('click', ()=>{
+    map.setView([0, 0], 1);
+    mapView = JSON.stringify([0, 0, 1])
+    LS.setItem('mapView', mapView)
+})
 
 if (LS.getItem('mapView')){
     mapView = JSON.parse(LS.getItem('mapView'))
-    map.setView([mapView[0], mapView[1]], 5);
+    map.setView([mapView[0], mapView[1]], mapView[3]);
 }
 // Сохранение значений чекбоксов
 // form.addEventListener('input', (event)=>{
