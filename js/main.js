@@ -1,4 +1,5 @@
 
+const LS = localStorage
 // Отрисовка списка мест
 // СПИСКИ ПРЕДМЕТОВ
 // Мозаика обезьяны
@@ -394,6 +395,8 @@ function findPlace(coords) {
         })
     });
     map.setView([coords[1], coords[0]], 5);
+    mapView = JSON.stringify([coords[1], coords[0]])
+    LS.setItem('mapView', mapView)
 };
 
 
@@ -474,6 +477,7 @@ let other = L.layerGroup([lg_units, tr_places, cs_places]).addTo(map)
 // }
 
 let overlays = {
+    // "Триатлон" : tr_places,
     // "Парикмахерские" : lg_units,
     // "Автомастерские": cs_places,
     "Мозаика обезьяны": monkeys,
@@ -495,7 +499,7 @@ const formLayers = document.querySelector('.leaflet-control-layers-overlays')
 
 checkboxesLS = {}
 const form = document.querySelector('.leaflet-control-layers-list')
-const LS = localStorage
+
 let checked;    
 
 
@@ -525,6 +529,7 @@ function saveLS(el, id){
         }
     }
 function loadLS(el, id) {
+    
     checked = JSON.parse(LS.getItem(`${id}`))
     if (checked == false){
         el.click()
@@ -535,7 +540,17 @@ function loadLS(el, id) {
     
 }
 
+// mapZoom = JSON.parse(LS.getItem('mapZoom'))
+// const mapElem = document.querySelector('#map')
+// const zoomControl = mapElem.querySelector('.leaflet-zoom-animated')
+// const zoomStyle = zoomControl.getAttribute('style')
+// console.log(zoomStyle);
+// console.log(map._zoom);
 
+if (LS.getItem('mapView')){
+    mapView = JSON.parse(LS.getItem('mapView'))
+    map.setView([mapView[0], mapView[1]], 5);
+}
 // Сохранение значений чекбоксов
 // form.addEventListener('input', (event)=>{
 //     const id = event.target.id 
