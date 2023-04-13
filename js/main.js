@@ -556,7 +556,7 @@ mainLink.addEventListener('click', ()=>{
 
 if (LS.getItem('mapView')){
     mapView = JSON.parse(LS.getItem('mapView'))
-    map.setView([mapView[0], mapView[1]], mapView[3]);
+    map.setView([mapView[0], mapView[1]], mapView[2]);
 }
 // Сохранение значений чекбоксов
 // form.addEventListener('input', (event)=>{
