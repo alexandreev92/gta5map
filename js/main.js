@@ -14,19 +14,26 @@ function renderData(data) {
         // placesName.classList.add('active');
     // Создаём обёртку ul для будущего списка li
     let placesList = document.createElement("ul")
-        placesList.classList.add('list-item')       
+        placesList.classList.add('list-item')
+        data.features    
         // Перебираем данные и отрисовываем их внутри обёртки "drop"
         data.features.forEach((element) => {
         let parent = document.querySelector('.list-item__main')
         // Получаем имя кнопки
-        let headerPlace = element.properties.name
-        headerPlace = headerPlace.slice(0, -3)
+        let headerPlaceName = element.properties.name
+        headerPlaceName = headerPlaceName.slice(0, -3)
+        const attrName = new String(`${headerPlaceName}`).replace(/ /g,'');
+        // if (attrName)
+        //Присваиваем кнопке атрибут с именем списка
+        placesName.setAttribute('name', headerPlaceName);
+        // attrName = placesName.getAttribute('name')
         // Добавляем кнопке полученное имя плюс "стрелочку"
-        placesName.innerHTML = headerPlace + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
+        placesName.innerHTML = headerPlaceName + '<i class="fa fa-angle-down" aria-hidden="true"></i>'
         
+        // Отрисовываем список
         listHtml = `
         <li class="list-item__item">
-        <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)})'>${element.properties.name} </a>
+        <a class="list-item__link" href="#" onclick='findPlace(${JSON.stringify(element.geometry.coordinates)}, ${JSON.stringify(attrName)})'>${element.properties.name} </a>
         </li>
         `
         // добавляем Кнопку "Dropdown" в начало обёртки drop
@@ -379,9 +386,14 @@ function complete(item) {
 
 
 
-function findPlace(coords) {
+function findPlace(coords, attrName) {
     const listItem = document.querySelectorAll('.list-item__item')
-
+    const parentCheckbox = document.querySelector('.leaflet-control-layers-overlays')
+    // const attributeName = JSON.parse(attrName)
+    let checkbox = parentCheckbox.querySelector(`[name="${attrName}"]`)
+    let checked = checkbox.checked
+    
+    // console.log(checkbox);
     // Применяем стиль АКТИВНОГО нажатого элемента 
     listItem.forEach(el => {
         el.addEventListener('click', (e) => {
@@ -392,12 +404,23 @@ function findPlace(coords) {
                 }
             });
             currentBtn.classList.add('active-list')
+
         })
     });
     const zoom = 5
+    if (checked == false) {
+        // checkbox.checked = true
+        checkbox.click()
+    }
     map.setView([coords[1], coords[0]], zoom);
     mapView = JSON.stringify([coords[1], coords[0], zoom])
+    //Клик по соответствующему чекбоксу через атрибут name
+    // checkbox.click()
+    console.log(attrName);
+
+    // Сохраняем позицию и зум выбранного места
     LS.setItem('mapView', mapView)
+
 };
 
 
@@ -483,7 +506,7 @@ let overlays = {
     // "Автомастерские": cs_places,
     "Мозаика обезьяны": monkeys,
     "Обрывки письма": letters,
-    "Игральные карты (Online)": gamecards,
+    "Игральные карты": gamecards,
     "Прочее": other,
 }
 
@@ -508,7 +531,9 @@ const formCheckbox = document.querySelectorAll('.leaflet-control-layers-selector
 formLayers.setAttribute('id', `formLayers`)
 
 formCheckbox.forEach((el, i)=>{
-    const label = el.nextElementSibling.textContent
+    // const label = el.nextElementSibling.textContent.slice(1)
+    const label = el.nextElementSibling.textContent.replace(/ /g,'')
+    // console.log(label);
     el.setAttribute('id', i+1)
     el.setAttribute('name', label)
     const id = el.getAttribute('id')
